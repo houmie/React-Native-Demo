@@ -5,4 +5,5 @@ A simple demo to show case how to create a singelton logger component in React n
 # Get get started
 
 npm install
+
 npx react-native start
