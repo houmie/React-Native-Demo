@@ -5,7 +5,9 @@
  * @format
  */
 
+import Logger from './Logger';
 import React, { useEffect } from 'react';
+import Share from 'react-native-share';
 import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
@@ -22,10 +24,6 @@ import {
   Colors,
   Header,
 } from 'react-native/Libraries/NewAppScreen';
-
-
-import Logger from './Logger';
-import Share from 'react-native-share';
 
 type SectionProps = PropsWithChildren<{
   title: string;
@@ -61,10 +59,9 @@ function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const logger = Logger.getInstance();
 
-  logger.log('Hello.');
-
   useEffect(() => {
     const displayLogs = async () => {
+      // @ts-ignore
       const logs = await logger.readLogs();
       console.log('Log contents:', logs);
     };
@@ -74,6 +71,9 @@ function App(): JSX.Element {
 
   const sendEmailWithAttachment = async () => {
     const logger = Logger.getInstance();
+    // @ts-ignore
+    logger.log('Hello.');
+    // @ts-ignore
     const zipFilePath = await logger.compressLogFile();
 
     try {
