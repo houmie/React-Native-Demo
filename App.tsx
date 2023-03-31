@@ -20,12 +20,8 @@ import { Button } from 'react-native';
 
 import {
   Colors,
-  DebugInstructions,
   Header,
-  LearnMoreLinks,
-  ReloadInstructions,
 } from 'react-native/Libraries/NewAppScreen';
-import Mailer from 'react-native-mail';
 
 
 import Logger from './Logger';

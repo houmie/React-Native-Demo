@@ -1,7 +1,5 @@
-import {Platform} from 'react-native';
 import RNFS from 'react-native-fs';
 import * as zipArchive from 'react-native-zip-archive';
-import Share from 'react-native-share';
 
 
 class Logger {
