@@ -7,7 +7,6 @@
 
 import Logger from './Logger';
 import React, { useEffect } from 'react';
-import Share from 'react-native-share';
 import type { PropsWithChildren } from 'react';
 import {
   SafeAreaView,
@@ -58,7 +57,7 @@ function Section({ children, title }: SectionProps): JSX.Element {
 function App(): JSX.Element {
   const isDarkMode = useColorScheme() === 'dark';
   const logger = Logger.getInstance();
-
+  logger.log("Today is a good day");
   useEffect(() => {
     const displayLogs = async () => {
       // @ts-ignore
@@ -68,29 +67,6 @@ function App(): JSX.Element {
 
     displayLogs();
   }, []);
-
-  const sendEmailWithAttachment = async () => {
-    const logger = Logger.getInstance();
-    // @ts-ignore
-    logger.log('Hello.');
-    // @ts-ignore
-    const zipFilePath = await logger.compressLogFile();
-
-    try {
-      const shareOptions = {
-        title: 'Share Log File',
-        url: 'file://' + zipFilePath,
-        subject: 'Log File', // For email clients
-        message: 'Attached is the compressed log file.', // For email clients
-      };
-
-      await Share.open(shareOptions);
-      console.log('Share dialog opened with attachment');
-    } catch (error) {
-      console.error('Error opening share dialog:', error);
-    }
-  };
-
 
   const backgroundStyle = {
     backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
@@ -115,7 +91,10 @@ function App(): JSX.Element {
           </Section>
 
           <Section title="Share Log">
-            <Button title="Share Log With Support" onPress={sendEmailWithAttachment} />
+            <Button
+              title="Share Log With Support"
+              onPress={() => logger.sendEmailWithAttachment()}
+            />
           </Section>
         </View>
       </ScrollView>

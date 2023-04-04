@@ -1,5 +1,6 @@
 import RNFS from 'react-native-fs';
 import * as zipArchive from 'react-native-zip-archive';
+import Share from 'react-native-share';
 
 
 class Logger {
@@ -45,9 +46,6 @@ class Logger {
         throw error;
       }
     }
-    
-    
-
 
   async log(message) {
     const timestamp = new Date().toISOString();
@@ -59,6 +57,27 @@ class Logger {
       console.error('Error writing log:', error);
     }
   }
+
+  async sendEmailWithAttachment() {
+    const zipFilePath = await this.compressLogFile();
+  
+    try {
+      const shareOptions = {
+        title: 'Share Log File',
+        url: 'file://' + zipFilePath,
+        subject: 'Log File', // For email clients
+        message: 'Attached is the compressed log file.',
+      };
+  
+      await Share.open(shareOptions);
+      console.log('Share dialog opened with attachment');
+    } catch (error) {
+      if (error.message !== 'User did not share') {
+        console.error('Error opening share dialog:', error);
+      }
+    }
+  }  
+  
 }
 
 export default Logger;
